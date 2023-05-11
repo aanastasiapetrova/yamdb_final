@@ -2,7 +2,7 @@ name: APIYamdb workflow
 
 on:
     push:
-        branches: [ main ]
+        branches: [ master ]
 
 
 jobs:
