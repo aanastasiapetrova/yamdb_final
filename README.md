@@ -1,4 +1,5 @@
 # Групповой проект YaMDb студентов Яндекс.Практикум
+![Yamdb_Workflow](https://github.com/github/aanastasiapetrova/api_yamdb/yamdb_workflow.yml/badge.svg)
 
 ## Описание
 
@@ -95,5 +96,3 @@
 
 #### Полный список запросов API находятся в документации
 #### Документация к API доступна по адресу (http://host:8000/redoc/) после запуска сервера с проектом
-
-![example event parameter](https://github.com/github/docs/actions/workflows/yamdb_workflow.yml/badge.svg?event=push)
