@@ -58,6 +58,9 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           passphrase: ${{ secrets.PASSPHRASE }}
           script: |
+            rm -rf yamdb_final
+            git clone ${{ secrets.REPOSITORY }}
+            cd yamdb_final/infra
             sudo docker pull anastasiapetrova/api_yamdb:v1.05.2023
             sudo docker-compose stop
             sudo docker-compose rm web
