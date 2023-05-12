@@ -43,7 +43,8 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           push: true
-          tags: anastasiapetrova/api_yamdb:latest
+          context: ./api_yamdb/
+          tags: ${{ secrets.DOCKERHUB_LOGIN }}/yamdb_final:latest
     
   deploy:
     runs-on: ubuntu-latest
@@ -57,9 +58,9 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           passphrase: ${{ secrets.PASSPHRASE }}
           script: |
-            sudo docker pull anastasiapetrova/api_yamdb:latest
-            sudo docker-compose stop
-            sudo docker-compose rm web
+            rm -rf yamdb_final
+            git clone ${{ secrets.REPOSITORY }}
+            cd yamdb_final/infra
             touch .env
             echo DB_ENGINE=${{ secrets.DB_ENGINE }} >> .env
             echo DB_NAME=${{ secrets.DB_NAME }} >> .env
@@ -67,8 +68,11 @@ jobs:
             echo DB_PASSWORD=${{ secrets.DB_PASSWORD }} >> .env
             echo DB_HOST=${{ secrets.DB_HOST }} >> .env
             echo DB_PORT=${{ secrets.DB_PORT}} >> .env
+            sudo docker pull anastasiapetrova/api_yamdb:v1.05.2023
+            sudo docker-compose stop
+            sudo docker-compose rm web
             sudo docker-compose up -d
-            sudo docker-compose exec web python manage.py collectstatic --no-input
+            sudo docker-compose exec -T web python manage.py collectstatic --no-input
 
   send_message:
     runs-on: ubuntu-latest
@@ -78,6 +82,5 @@ jobs:
         uses: appleboy/telegram-action@master
         with:
           to: ${{ secrets.TELEGRAM_ID }}
-          token: ${{ secrets.TELERAM_TOKEN }}
-          message: Workflow успешно выполнен!
-
+          token: ${{ secrets.TELEGRAM_TOKEN }}
+          message: ${{ github.workflow }} успешно выполнен! 
