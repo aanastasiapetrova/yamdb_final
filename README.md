@@ -1,4 +1,5 @@
 # Групповой проект YaMDb студентов Яндекс.Практикум
+
 ![APIYamdb workflow](https://github.com/aanastasiapetrova/yamdb_final/workflows/APIYamdb_workflow/badge.svg)
 
 ## Описание
